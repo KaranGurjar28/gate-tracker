@@ -129,12 +129,16 @@ body { padding-bottom: 72px; }
 .test-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; line-height: 1.4; }
 .test-meta { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
 .score-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.score-input { width: 68px; background: var(--surface2); border: 0.5px solid var(--border2); border-radius: var(--radius-sm); color: var(--text); font-size: 14px; font-family: 'JetBrains Mono', monospace; font-weight: 500; padding: 6px 10px; text-align: center; outline: none; -webkit-appearance: none; }
+.score-input { width: 60px; background: var(--surface2); border: 0.5px solid var(--border2); border-radius: var(--radius-sm); color: var(--text); font-size: 14px; font-family: 'JetBrains Mono', monospace; font-weight: 500; padding: 6px 8px; text-align: center; outline: none; -webkit-appearance: none; }
 .score-input:focus { border-color: var(--accent); }
 .score-lbl { font-size: 12px; color: var(--muted); }
 .bmark-area { width: 100%; background: var(--surface2); border: 0.5px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 12px; font-family: 'Space Grotesk', sans-serif; padding: 8px 10px; resize: none; min-height: 52px; outline: none; margin-top: 4px; }
 .bmark-area:focus { border-color: var(--border2); }
 .bmark-label { font-size: 11px; color: var(--muted); }
+
+/* Custom Select */
+.select-input { width: 100%; background: var(--surface2); border: 0.5px solid var(--border2); border-radius: var(--radius-sm); color: var(--text); font-size: 13px; font-family: 'Space Grotesk', sans-serif; padding: 8px 10px; outline: none; appearance: none; -webkit-appearance: none; }
+.select-input:focus { border-color: var(--accent); }
 
 /* Post-Jul */
 .phase-banner { background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(248,113,113,0.1)); border: 0.5px solid rgba(245,158,11,0.3); border-radius: var(--radius); padding: 14px; margin-bottom: 12px; }
@@ -206,6 +210,9 @@ body { padding-bottom: 72px; }
     <div class="phase-title">Post-syllabus phase</div>
     <div class="phase-sub">Aug 1, 2026 – Feb 7, 2027 · Problem solving, revision & mocks</div>
   </div>
+
+  <div class="sec-label">Parallel Subjects Routine (Daily)</div>
+  <div id="parallelCard"></div>
 
   <div class="sec-label">Problem solving — daily log</div>
   <div class="card" id="psCard"></div>
@@ -300,14 +307,14 @@ const TESTS=[
   {id:'t17',name:'DBMS Test 1 — Normalization',                    date:d('2026-06-17'),sub:'dbms'},
   {id:'t18',name:'DBMS Test 2 — ER Model, Integrity Constraints',  date:d('2026-06-19'),sub:'dbms'},
   {id:'t19',name:'DBMS Test 3 — SQL, TRC, Relational Algebra',     date:d('2026-06-21'),sub:'dbms'},
-  {id:'t20',name:'DBMS Test 4 — Indexing, B Tree, B+ Tree',         date:d('2026-06-23'),sub:'dbms'},
+  {id:'t20',name:'DBMS Test 4 — Indexing, B Tree, B+ Tree',        date:d('2026-06-23'),sub:'dbms'},
   {id:'t21',name:'DBMS Test 5 — Transaction Management',           date:d('2026-06-25'),sub:'dbms'},
-  {id:'t22',name:'DBMS Subject Test 1',                             date:d('2026-06-28'),sub:'dbms'},
-  {id:'t23',name:'DBMS Subject Test 2',                             date:d('2026-06-30'),sub:'dbms'},
-  {id:'t24',name:'DBMS Subject Test 3',                             date:d('2026-07-02'),sub:'dbms'},
+  {id:'t22',name:'DBMS Subject Test 1',                            date:d('2026-06-28'),sub:'dbms'},
+  {id:'t23',name:'DBMS Subject Test 2',                            date:d('2026-06-30'),sub:'dbms'},
+  {id:'t24',name:'DBMS Subject Test 3',                            date:d('2026-07-02'),sub:'dbms'},
   {id:'t25',name:'EM Test 1 — Linear Algebra',                     date:d('2026-06-28'),sub:'em'},
   {id:'t26',name:'EM Test 2 — Counting',                           date:d('2026-06-30'),sub:'em'},
-  {id:'t27',name:'EM Test 3 — Probability & Bayes Theorem',         date:d('2026-07-02'),sub:'em'},
+  {id:'t27',name:'EM Test 3 — Probability & Bayes Theorem',        date:d('2026-07-02'),sub:'em'},
   {id:'t28',name:'EM Test 4 — Complete Probability',               date:d('2026-07-04'),sub:'em'},
   {id:'t29',name:'EM Test 5 — Calculus',                           date:d('2026-07-06'),sub:'em'},
   {id:'t30',name:'EM Subject Test 1',                              date:d('2026-07-08'),sub:'em'},
@@ -356,9 +363,9 @@ const TESTS=[
   {id:'t73',name:'Algo Test 2 — Recurrence, Master Theorem',       date:d('2026-09-06'),sub:'algo'},
   {id:'t74',name:'Algo Test 3 — Greedy Algorithms',                date:d('2026-09-09'),sub:'algo'},
   {id:'t75',name:'Algo Test 4 — Dynamic Programming',              date:d('2026-09-12'),sub:'algo'},
-  {id:'t76',name:'Algo Subject Test 1',                             date:d('2026-09-15'),sub:'algo'},
-  {id:'t77',name:'Algo Subject Test 2',                             date:d('2026-09-18'),sub:'algo'},
-  {id:'t78',name:'Algo Subject Test 3',                             date:d('2026-09-21'),sub:'algo'},
+  {id:'t76',name:'Algo Subject Test 1',                            date:d('2026-09-15'),sub:'algo'},
+  {id:'t77',name:'Algo Subject Test 2',                            date:d('2026-09-18'),sub:'algo'},
+  {id:'t78',name:'Algo Subject Test 3',                            date:d('2026-09-21'),sub:'algo'},
   {id:'t79',name:'DS Test 1 — Linked List',                        date:d('2026-09-21'),sub:'ds'},
   {id:'t80',name:'DS Test 2 — Asymptotic Notations and Loops',     date:d('2026-09-24'),sub:'ds'},
   {id:'t81',name:'DS Test 3 — Stack and Queue',                    date:d('2026-09-27'),sub:'ds'},
@@ -510,12 +517,25 @@ function renderTests(){
       const ts=state['ts_'+t.id]||{};
       const isPast=TODAY>t.date;
       const isDue=diff(TODAY,t.date)>=0&&diff(TODAY,t.date)<=3;
+      
       const hasScore=ts.score!==undefined&&ts.score!=='';
+      const hasTotal=ts.total!==undefined&&ts.total!=='';
+      
       let bc='b-soon',bt='Upcoming';
       if(hasScore){bc='b-done';bt='Done';}
       else if(isDue){bc='b-active';bt='Due soon';}
       else if(isPast){bc='b-post';bt='Pending';}
       const c=subColor[t.sub]||'#7b8399';
+      
+      // Calculate eval html logic dynamically
+      let evalHtml = '';
+      if(hasScore && hasTotal && Number(ts.total) > 0) {
+        const pct = (Number(ts.score) / Number(ts.total)) * 100;
+        evalHtml = `<span style="font-size:12px;font-weight:600;color:${pct>=60?'var(--green)':'var(--red)'}">${pct>=60?'✓ Good':'↑ Revise'}</span>`;
+      } else if (hasScore && !hasTotal) {
+        evalHtml = `<span style="font-size:12px;font-weight:600;color:${Number(ts.score)>=60?'var(--green)':'var(--red)'}">${Number(ts.score)>=60?'✓ Good':'↑ Revise'}</span>`; // fallback logic
+      }
+
       html+=`<div class="test-card">
         <div class="test-header">
           <div class="test-name">${t.name}</div>
@@ -524,9 +544,10 @@ function renderTests(){
         <div class="test-meta">${fmtY(t.date)} &nbsp;·&nbsp; <span style="color:${c}">${t.sub==='mock'?'Mock Test':(SUBJ.find(s=>s.id===t.sub)||{name:t.sub}).name}</span></div>
         <div class="score-row">
           <span class="score-lbl">Score:</span>
-          <input class="score-input" type="number" min="0" max="100" placeholder="—" value="${ts.score||''}" oninput="savets('${t.id}','score',this.value)">
-          <span class="score-lbl">/ 100</span>
-          ${hasScore?`<span style="font-size:12px;font-weight:600;color:${Number(ts.score)>=60?'var(--green)':'var(--red)'}">${Number(ts.score)>=60?'✓ Good':'↑ Revise'}</span>`:''}
+          <input class="score-input" type="number" min="0" placeholder="—" value="${ts.score||''}" oninput="savets('${t.id}','score',this.value)">
+          <span class="score-lbl">/</span>
+          <input class="score-input" type="number" min="1" placeholder="Tot" value="${ts.total||''}" oninput="savets('${t.id}','total',this.value)">
+          ${evalHtml}
         </div>
         <div class="bmark-label">Bookmarked questions / notes:</div>
         <textarea class="bmark-area" placeholder="e.g. Q3 — Pumping lemma, Q7 — important proof…" oninput="savets('${t.id}','bmark',this.value)">${ts.bmark||''}</textarea>
@@ -545,8 +566,39 @@ function renderPost(){
   const today=TODAY;
   const psKey='ps_'+today.toISOString().slice(0,10);
   if(!state[psKey])state[psKey]={};
+
+  // 1. Parallel Subjects Logic
+  let parallelHtml = '';
+  for(let i=1; i<=3; i++) {
+    let sId = state[psKey + '_s' + i] || '';
+    let psDone = state[psKey + '_s' + i + '_ps'] ? 'on' : '';
+    let revDone = state[psKey + '_s' + i + '_rev'] ? 'on' : '';
+    let optionsHtml = `<option value="">-- Select Subject ${i} --</option>` + SUBJ.filter(s=>s.id!=='apt').map(s=>`<option value="${s.id}" ${sId===s.id?'selected':''}>${s.name}</option>`).join('');
+
+    parallelHtml += `
+    <div class="card-sm" style="margin-bottom:10px;">
+      <div style="margin-bottom:8px">
+        <select class="select-input" onchange="savePSState('${psKey}_s${i}', this.value)">
+          ${optionsHtml}
+        </select>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <div class="check-item" style="border:none; padding:4px 0; flex:1" onclick="togPSState('${psKey}_s${i}_ps', this)">
+          <div class="chkbox ${psDone}"><span style="color:#fff;font-size:14px">${psDone?'✓':''}</span></div>
+          <span class="chk-label ${psDone?'struck':''}">2h Prob. Solving</span>
+        </div>
+        <div class="check-item" style="border:none; padding:4px 0; flex:1" onclick="togPSState('${psKey}_s${i}_rev', this)">
+          <div class="chkbox ${revDone}"><span style="color:#fff;font-size:14px">${revDone?'✓':''}</span></div>
+          <span class="chk-label ${revDone?'struck':''}">1h Revision</span>
+        </div>
+      </div>
+    </div>`;
+  }
+  document.getElementById('parallelCard').innerHTML = parallelHtml;
+
+  // 2. Generic Problem Solving Daily Log
   document.getElementById('psCard').innerHTML=`
-    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">Problem solving — ${today.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</div>
+    <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px">General Tasks — ${today.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})}</div>
     ${PS_ITEMS.map((p,i)=>{
       const tid='p'+i;const on=!!state[psKey][tid];
       return `<div class="check-item" onclick="togPS('${psKey}','${tid}',this)">
@@ -577,6 +629,17 @@ function renderPost(){
       </div>`;
     }).join('')}`;
 }
+
+window.savePSState=function(key, val) {
+  state[key] = val; save();
+};
+window.togPSState=function(key, row) {
+  state[key] = !state[key]; save();
+  const on = state[key];
+  row.querySelector('.chkbox').className = 'chkbox' + (on ? ' on' : '');
+  row.querySelector('.chkbox span').textContent = on ? '✓' : '';
+  row.querySelector('.chk-label').className = 'chk-label' + (on ? ' struck' : '');
+};
 
 window.togPS=function(k,tid,row){
   if(!state[k])state[k]={};state[k][tid]=!state[k][tid];save();
